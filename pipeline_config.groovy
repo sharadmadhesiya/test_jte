@@ -1,5 +1,4 @@
 libraries{
-    merge = true
     maven
     
 }
