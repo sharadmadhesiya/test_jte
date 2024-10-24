@@ -1,6 +1,7 @@
 void call() {
     node {
         stage("Test: Static Code Analysis") {
+            def pipelineConfig = pipeline_config()
             println "Test ios library"
             println("#################### STARTED S3 DEPLOYMENT ####################")
 
