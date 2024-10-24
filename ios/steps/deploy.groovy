@@ -1,9 +1,9 @@
 void call(app_env) {
     node {
-        stage('Checkout Code') {
+        // stage('Checkout Code') {
             
-                git branch: 'main', url: 'https://github.com/sharadmadhesiya/jte_pipeline.git'            
-        }
+        //         git branch: 'main', url: 'https://github.com/sharadmadhesiya/jte_pipeline.git'            
+        // }
         stage("Test: Static Code Analysis") {
             println "Test ios library"
             println(pipelineConfig)
