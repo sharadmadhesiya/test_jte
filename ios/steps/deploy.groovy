@@ -2,7 +2,7 @@ void call(app_env) {
     node {
         stage("Test: Static Code Analysis") {
             println "Test ios library"
-            println (app_env.dev.APPSTORE_BUNDLE_ID)
+            println (app_env.APPSTORE_BUNDLE_ID)
             println("#################### STARTED S3 DEPLOYMENT ####################")
 
             // Print the APPSTORE_BUNDLE_ID in Groovy
