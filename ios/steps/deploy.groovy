@@ -9,6 +9,8 @@ void call() {
             withCredentials([string(credentialsId: 'APPSTORE_KEY_ID', variable: 'APPSTORE_KEY_ID')]) {
                 sh '''
                 echo $APPSTORE_KEY_ID
+                echo "checking bundle id"
+                echo ${APPSTORE_BUNDLE_ID}
                 '''
             }
         }
