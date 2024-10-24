@@ -19,7 +19,7 @@ void call(app_env) {
             withCredentials([string(credentialsId: 'APPSTORE_KEY_ID', variable: 'APPSTORE_KEY_ID')]) {
                 sh """
                 
-                git checkout 
+                
                 cd jte_pipeline
                 ls -lh
                 echo \$APPSTORE_KEY_ID
