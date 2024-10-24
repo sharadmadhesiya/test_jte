@@ -16,7 +16,7 @@ void call(app_env) {
                 sh """
                 echo \$APPSTORE_KEY_ID
                 echo "Checking bundle id from shell"
-                echo ${APPSTORE_BUNDLE_ID}
+                
                 """
             }
         }
