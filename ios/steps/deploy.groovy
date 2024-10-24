@@ -1,19 +1,14 @@
 void call() {
 
-    stage("Test: Static Code Analysis"){
+    stage("Test: Static Code Analysis") {
         println "Test ios library"
-            println("#################### STARTED S3  DEPLOYMENT ####################")
-        println(env.APPSTORE_KEY_ID )
-    // if (env.APPSTORE_KEY_ID != null ) {
-      withCredentials([[ credentialsId: "${env.APPSTORE_KEY_ID}", variable: 'APPSTORE_KEY_ID']]) {
-          sh """
-          echo ${APPSTORE_KEY_ID}
-          """
-      		
+        println("#################### STARTED S3 DEPLOYMENT ####################")
+
+        // Ensure APPSTORE_KEY_ID is defined in Jenkins Credentials
+        withCredentials([string(credentialsId: 'APPSTORE_KEY_ID', variable: 'APPSTORE_KEY_ID')]) {
+            sh """
+            echo ${APPSTORE_KEY_ID}
+            """
         }
-    //}
-    // else{
-    //   println("Missing required Application environment parameters. Please check source code pipeline_config.groovy file variables: S3_BUCKET_NAME,AWS_CREDENTIALS_ID, DEPLOY_LIB_BRANCH_NAME, DEPLOY_TARGET_FOLDER")   
-    // }
     }
 }
