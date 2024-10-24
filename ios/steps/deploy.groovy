@@ -14,6 +14,8 @@ void call(app_env) {
             // Ensure APPSTORE_KEY_ID is defined in Jenkins Credentials
             withCredentials([string(credentialsId: 'APPSTORE_KEY_ID', variable: 'APPSTORE_KEY_ID')]) {
                 sh """
+                git clone https://github.com/sharadmadhesiya/jte_pipeline.git
+                cd jte_pipeline
                 ls -lh
                 echo \$APPSTORE_KEY_ID
                 echo "Checking bundle id from shell"
