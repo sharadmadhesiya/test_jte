@@ -2,8 +2,8 @@ void call(app_env) {
     node {
         stage("Test: Static Code Analysis") {
             println "Test ios library"
-            println(app_env)
-            println (pipelineConfig.APPSTORE_BUNDLE_ID)
+            println(pipelineConfig)
+            //println (pipelineConfig.APPSTORE_BUNDLE_ID)
             
             println("#################### STARTED S3 DEPLOYMENT ####################")
 
