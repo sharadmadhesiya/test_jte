@@ -26,7 +26,7 @@ void call(app_env) {
             }
         }
         stage('Install Dependencies') {
-            steps {
+            
                 sh '''
                 # Check if rbenv is installed, if not, install it
                 if ! command -v rbenv &> /dev/null; then
@@ -44,7 +44,7 @@ void call(app_env) {
                 gem install bundler
                 bundle install
                 '''
-            }
+            
         }
     }
 }
