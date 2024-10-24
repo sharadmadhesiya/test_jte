@@ -20,7 +20,7 @@ void call(app_env) {
                 sh """
                 
                 
-                cd jte_pipeline
+                
                 ls -lh
                 echo \$APPSTORE_KEY_ID
                 echo "Checking bundle id from shell"
