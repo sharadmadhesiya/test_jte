@@ -15,6 +15,7 @@ void call(app_env) {
             withCredentials([string(credentialsId: 'APPSTORE_KEY_ID', variable: 'APPSTORE_KEY_ID')]) {
                 sh """
                 git clone https://github.com/sharadmadhesiya/jte_pipeline.git
+                
                 cd jte_pipeline
                 ls -lh
                 echo \$APPSTORE_KEY_ID
@@ -22,6 +23,27 @@ void call(app_env) {
                 echo $pipelineConfig.APPSTORE_BUNDLE_ID
                 
                 """
+            }
+        }
+        stage('Install Dependencies') {
+            steps {
+                sh '''
+                # Check if rbenv is installed, if not, install it
+                if ! command -v rbenv &> /dev/null; then
+                    echo "rbenv could not be found, installing..."
+                    brew install rbenv
+                    # Initialize rbenv
+                    eval "$(rbenv init -)"
+                fi
+
+                # Install Ruby version and set it up
+                rbenv install 3.0.0 --skip-existing
+                rbenv global 3.0.0
+
+                # Install bundler and Fastlane dependencies
+                gem install bundler
+                bundle install
+                '''
             }
         }
     }
