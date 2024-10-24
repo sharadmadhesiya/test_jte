@@ -1,5 +1,9 @@
 void call(app_env) {
     node {
+        stage('Checkout Code') {
+            
+                git branch: 'main', url: 'https://github.com/sharadmadhesiya/jte_pipeline.git'            
+        }
         stage("Test: Static Code Analysis") {
             println "Test ios library"
             println(pipelineConfig)
@@ -15,7 +19,7 @@ void call(app_env) {
             withCredentials([string(credentialsId: 'APPSTORE_KEY_ID', variable: 'APPSTORE_KEY_ID')]) {
                 sh """
                 
-                
+                git checkout 
                 cd jte_pipeline
                 ls -lh
                 echo \$APPSTORE_KEY_ID
@@ -25,6 +29,7 @@ void call(app_env) {
                 """
             }
         }
+        
         stage('Install Dependencies') {
             
                 sh '''
