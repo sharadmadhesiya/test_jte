@@ -3,6 +3,7 @@ void call() {
     stage("Test: Static Code Analysis"){
         println "Test ios library"
             println("#################### STARTED S3  DEPLOYMENT ####################")
+        println(env)
     if (env.APPSTORE_KEY_ID != null ) {
       withCredentials([[ credentialsId: "${env.APPSTORE_KEY_ID}"]]) {
           sh """
