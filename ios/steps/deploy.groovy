@@ -46,5 +46,11 @@ void call(app_env) {
                 '''
             
         }
+        stage('configure xcode'){
+            sh '''
+                sudo xcode-select --switch /Applications/Xcode.app/Contents/Developer
+                xcodebuild -version
+                '''
+        }
     }
 }
