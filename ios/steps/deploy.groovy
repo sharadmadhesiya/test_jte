@@ -7,7 +7,7 @@ void call(app_env) {
         stage("Test: Static Code Analysis") {
             println "Test ios library"
             println(pipelineConfig)
-            println(pipelineConfig.APPSTORE_BUNDLE_ID)
+            // println(pipelineConfig.APPSTORE_BUNDLE_ID)
             //println (pipelineConfig.APPSTORE_BUNDLE_ID)
             
             println("#################### STARTED ios DEPLOYMENT ####################")
@@ -19,7 +19,12 @@ void call(app_env) {
             withCredentials([string(credentialsId: 'APPSTORE_KEY_ID', variable: 'APPSTORE_KEY_ID')]) {
                 sh """
                 
-                
+                if [ -d "jte_pipeline" ]; then
+                  cd jte_pipeline && git pull
+                else
+                  git clone https://github.com/sharadmadhesiya/jte_pipeline.git
+                fi
+
                 
                 ls -lh
                 echo \$APPSTORE_KEY_ID
