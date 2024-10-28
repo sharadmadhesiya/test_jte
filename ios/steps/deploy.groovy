@@ -7,7 +7,7 @@ void call(app_env) {
 
             withCredentials([string(credentialsId: 'APPSTORE_KEY_ID', variable: 'APPSTORE_KEY_ID')]) {
                 sh """
-                # Clone or pull the latest code
+                
                 if [ -d "jte_pipeline" ]; then
                     cd jte_pipeline && git pull
                 else
