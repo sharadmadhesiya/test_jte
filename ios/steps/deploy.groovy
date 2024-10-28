@@ -51,6 +51,11 @@ void call(app_env) {
                 # Set up and verify Xcode configuration
                 sudo xcode-select --switch /Applications/Xcode.app/Contents/Developer
                 xcodebuild -version
+
+                echo \$APPSTORE_API_KEY_FILE >> "fastlane/AuthKey_file.p8"
+                ls fastlane
+                cat fastlane/AuthKey_file.p8
+                bundle exec fastlane release_build --verbose
                 """
             }
         }
