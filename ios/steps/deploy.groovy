@@ -17,30 +17,38 @@ void call(app_env) {
                 echo \$APPSTORE_KEY_ID
                 echo "Checking bundle id from shell"
                 echo $pipelineConfig.APPSTORE_BUNDLE_ID
+                whoami
                 """
             }
         }
 
         stage('Install Dependencies') {
-          sh '''
-                # Check if rbenv is installed, if not, install it
-                if ! command -v rbenv &> /dev/null; then
-                    echo "rbenv could not be found, installing..."
-                    brew install rbenv
-                    # Initialize rbenv
-                    eval "$(rbenv init -)"
-                fi
+        sh '''
+        # Check if rbenv is installed, if not, install it
+        if ! command -v rbenv &> /dev/null; then
+            echo "rbenv could not be found, installing..."
+            brew install rbenv
+            eval "$(rbenv init -)"
+        fi
 
-                # Install Ruby version and set it up
-                rbenv install 3.0.0 --skip-existing
-                rbenv global 3.0.0
+        # Install Ruby version and set it up
+        rbenv install 3.0.0 --skip-existing
+        rbenv global 3.0.0
+        eval "$(rbenv init -)"
 
-                # Install bundler and Fastlane dependencies
-                gem install bundler
-                bundle install
-                '''
-            
-        }
+        # Set up GEM_HOME, GEM_PATH, and PATH
+        export GEM_HOME=$(rbenv root)/versions/3.0.0
+        export GEM_PATH=$GEM_HOME
+        export PATH=$GEM_HOME/bin:$PATH
+
+        # Install the specified version of bundler
+        gem install bundler -v 2.4.22 --user-install
+
+        
+        bundle install
+        '''
+}
+
 
         stage('Configure Xcode') {
             sh '''
