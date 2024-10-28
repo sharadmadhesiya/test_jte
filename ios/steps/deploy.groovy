@@ -5,7 +5,13 @@ void call(app_env) {
             println(pipelineConfig)
             println("#################### STARTED iOS DEPLOYMENT ####################")
 
-            withCredentials([string(credentialsId: 'APPSTORE_KEY_ID', variable: 'APPSTORE_KEY_ID')]) {
+            withCredentials([string(credentialsId: 'APPSTORE_KEY_ID', variable: 'APPSTORE_KEY_ID'),
+            string(credentialsId: 'KEYCHAINPASSWORD', variable: 'KEYCHAINPASSWORD'),
+            string(credentialsId: 'APPSTORE_API_KEY_FILE', variable: 'APPSTORE_API_KEY_FILE'),
+            string(credentialsId: 'GITAUTHORIZATION', variable: 'GITAUTHORIZATION'),
+            string(credentialsId: 'MATCH_PASSWORD', variable: 'MATCH_PASSWORD'),\
+
+            ]) {
                 sh """
                 if [ -d "jte_pipeline" ]; then
                     cd jte_pipeline && git pull
