@@ -19,7 +19,7 @@ void call(app_env) {
                 ls -lh
                 echo \$APPSTORE_KEY_ID
                 echo "Checking bundle id from shell"
-                echo ${pipelineConfig.APPSTORE_BUNDLE_ID}
+                //echo ${pipelineConfig.APPSTORE_BUNDLE_ID}
                 whoami
 
                 # Check if rbenv is installed, if not, install it
