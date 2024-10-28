@@ -43,7 +43,7 @@ void call(app_env) {
                 bundle install
 
                 # Set up and verify Xcode configuration
-                sudo xcode-select --switch /Applications/Xcode15.4.app/Contents/Developer
+                xcode-select --switch /Applications/Xcode.app/Contents/Developer
                 xcodebuild -version
                 """
             }
