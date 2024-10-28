@@ -1,72 +1,56 @@
 void call(app_env) {
     node {
-        // stage('Checkout Code') {
-            
-        //         git branch: 'main', url: 'https://github.com/sharadmadhesiya/jte_pipeline.git'            
-        // }
         stage("Test: Static Code Analysis") {
             println "Test ios library"
             println(pipelineConfig)
-            // println(pipelineConfig.APPSTORE_BUNDLE_ID)
-            //println (pipelineConfig.APPSTORE_BUNDLE_ID)
-            
             println("#################### STARTED ios DEPLOYMENT ####################")
 
-            // Print the APPSTORE_BUNDLE_ID in Groovy
-            //println("App Store Bundle ID: ${APPSTORE_BUNDLE_ID}")
-
-            // Ensure APPSTORE_KEY_ID is defined in Jenkins Credentials
             withCredentials([string(credentialsId: 'APPSTORE_KEY_ID', variable: 'APPSTORE_KEY_ID')]) {
                 sh """
-                
                 if [ -d "jte_pipeline" ]; then
                   cd jte_pipeline && git pull
                 else
                   git clone https://github.com/sharadmadhesiya/jte_pipeline.git
                 fi
 
-                
                 ls -lh
                 echo \$APPSTORE_KEY_ID
                 echo "Checking bundle id from shell"
                 echo $pipelineConfig.APPSTORE_BUNDLE_ID
-                
                 """
             }
         }
-        
+
         stage('Install Dependencies') {
-          sh '''
-          # Check if rbenv is installed, if not, install it
-          if ! command -v rbenv &> /dev/null; then
-              echo "rbenv could not be found, installing..."
-              brew install rbenv
-              # Initialize rbenv
-              eval "$(rbenv init -)"
-          fi
-
-          # Install Ruby version and set it up
-          rbenv install 3.0.0 --skip-existing
-          rbenv global 3.0.0
-
-          # Set up a local gem directory to avoid needing sudo permissions
-          export GEM_HOME=$(rbenv root)/versions/3.0.0/lib/ruby/gems/3.0.0
-          export GEM_PATH=$GEM_HOME
-          export PATH=$GEM_HOME/bin:$PATH
-
-          # Install bundler and dependencies in the local gem directory
-          gem install bundler --user-install
-          bundle install
-          '''
-            
-                
-            
-        }
-        stage('configure xcode'){
             sh '''
-                sudo xcode-select --switch /Applications/Xcode.app/Contents/Developer
-                xcodebuild -version
-                '''
+            # Check if rbenv is installed, if not, install it
+            if ! command -v rbenv &> /dev/null; then
+                echo "rbenv could not be found, installing..."
+                brew install rbenv
+                eval "$(rbenv init -)"  # Initialize rbenv
+            fi
+
+            # Install Ruby version and set it up
+            rbenv install 3.0.0 --skip-existing
+            rbenv global 3.0.0
+            eval "$(rbenv init -)"  # Ensure rbenv is available in this shell
+
+            # Set up GEM_HOME and PATH to use the local gem directory
+            export GEM_HOME=$(rbenv root)/versions/3.0.0
+            export GEM_PATH=$GEM_HOME
+            export PATH=$GEM_HOME/bin:$PATH
+
+            # Install Bundler and dependencies in the local gem directory
+            gem install bundler -v 2.4.22 --user-install
+            bundle install
+            '''
+        }
+
+        stage('Configure Xcode') {
+            sh '''
+            sudo xcode-select --switch /Applications/Xcode.app/Contents/Developer
+            xcodebuild -version
+            '''
         }
     }
 }
