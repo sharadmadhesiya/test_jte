@@ -22,28 +22,24 @@ void call(app_env) {
         }
 
         stage('Install Dependencies') {
-            sh '''
-            # Check if rbenv is installed, if not, install it
-            if ! command -v rbenv &> /dev/null; then
-                echo "rbenv could not be found, installing..."
-                brew install rbenv
-                eval "$(rbenv init -)"  # Initialize rbenv
-            fi
+          sh '''
+                # Check if rbenv is installed, if not, install it
+                if ! command -v rbenv &> /dev/null; then
+                    echo "rbenv could not be found, installing..."
+                    brew install rbenv
+                    # Initialize rbenv
+                    eval "$(rbenv init -)"
+                fi
 
-            # Install Ruby version and set it up
-            rbenv install 3.0.0 --skip-existing
-            rbenv global 3.0.0
-            eval "$(rbenv init -)"  # Ensure rbenv is available in this shell
+                # Install Ruby version and set it up
+                rbenv install 3.0.0 --skip-existing
+                rbenv global 3.0.0
 
-            # Set up GEM_HOME and PATH to use the local gem directory
-            export GEM_HOME=$(rbenv root)/versions/3.0.0
-            export GEM_PATH=$GEM_HOME
-            export PATH=$GEM_HOME/bin:$PATH
-
-            # Install Bundler and dependencies in the local gem directory
-            gem install bundler -v 2.4.22 --user-install
-            bundle install
-            '''
+                # Install bundler and Fastlane dependencies
+                gem install bundler
+                bundle install
+                '''
+            
         }
 
         stage('Configure Xcode') {
