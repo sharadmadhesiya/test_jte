@@ -40,11 +40,10 @@ void call(app_env) {
 
                 # Install the specified version of Bundler and bundle install
                 gem install bundler -v 2.4.22 --user-install
-                cd jte_pipeline  # Navigate to directory with Gemfile, if not already there
                 bundle install
 
                 # Set up and verify Xcode configuration
-                sudo xcode-select --switch /Applications/Xcode.app/Contents/Developer
+                xcode-select --switch /Applications/Xcode.app/Contents/Developer
                 xcodebuild -version
                 """
             }
