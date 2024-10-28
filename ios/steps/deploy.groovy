@@ -7,7 +7,6 @@ void call(app_env) {
 
             withCredentials([string(credentialsId: 'APPSTORE_KEY_ID', variable: 'APPSTORE_KEY_ID')]) {
                 sh """
-                
                 if [ -d "jte_pipeline" ]; then
                     cd jte_pipeline && git pull
                 else
@@ -17,7 +16,7 @@ void call(app_env) {
 
                 # Display current user and check key ID
                 ls -lh
-                
+
                 echo "Checking bundle id from shell"
                 
                 whoami
@@ -27,12 +26,12 @@ void call(app_env) {
                     echo "rbenv could not be found, installing..."
                     brew install rbenv
                 fi
-                eval "$(rbenv init -)"
+                eval "\$(rbenv init -)"
 
                 # Install Ruby version and set it up
                 rbenv install 3.0.0 --skip-existing
                 rbenv global 3.0.0
-                eval "$(rbenv init -)"
+                eval "\$(rbenv init -)"
 
                 # Set up GEM_HOME, GEM_PATH, and PATH
                 export GEM_HOME=\$(rbenv root)/versions/3.0.0
