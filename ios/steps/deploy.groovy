@@ -18,43 +18,69 @@ void call(app_env) {
                 echo "Checking bundle id from shell"
                 echo $pipelineConfig.APPSTORE_BUNDLE_ID
                 whoami
+                # Check if rbenv is installed, if not, install it
+                if ! command -v rbenv &> /dev/null; then
+                    echo "rbenv could not be found, installing..."
+                    brew install rbenv
+                    eval "$(rbenv init -)"
+                fi
+
+                # Install Ruby version and set it up
+                rbenv install 3.0.0 --skip-existing
+                rbenv global 3.0.0
+                eval "$(rbenv init -)"
+
+                # Set up GEM_HOME, GEM_PATH, and PATH
+                export GEM_HOME=$(rbenv root)/versions/3.0.0
+                export GEM_PATH=$GEM_HOME
+                export PATH=$GEM_HOME/bin:$PATH
+
+                # Install the specified version of bundler
+                gem install bundler -v 2.4.22 --user-install
+
+                
+                bundle install
+
+                xcode-select --switch /Applications/Xcode.app/Contents/Developer
+                xcodebuild -version
+
                 """
             }
         }
 
-        stage('Install Dependencies') {
-        sh '''
-        # Check if rbenv is installed, if not, install it
-        if ! command -v rbenv &> /dev/null; then
-            echo "rbenv could not be found, installing..."
-            brew install rbenv
-            eval "$(rbenv init -)"
-        fi
+//         stage('Install Dependencies') {
+//         sh '''
+//         # Check if rbenv is installed, if not, install it
+//         if ! command -v rbenv &> /dev/null; then
+//             echo "rbenv could not be found, installing..."
+//             brew install rbenv
+//             eval "$(rbenv init -)"
+//         fi
 
-        # Install Ruby version and set it up
-        rbenv install 3.0.0 --skip-existing
-        rbenv global 3.0.0
-        eval "$(rbenv init -)"
+//         # Install Ruby version and set it up
+//         rbenv install 3.0.0 --skip-existing
+//         rbenv global 3.0.0
+//         eval "$(rbenv init -)"
 
-        # Set up GEM_HOME, GEM_PATH, and PATH
-        export GEM_HOME=$(rbenv root)/versions/3.0.0
-        export GEM_PATH=$GEM_HOME
-        export PATH=$GEM_HOME/bin:$PATH
+//         # Set up GEM_HOME, GEM_PATH, and PATH
+//         export GEM_HOME=$(rbenv root)/versions/3.0.0
+//         export GEM_PATH=$GEM_HOME
+//         export PATH=$GEM_HOME/bin:$PATH
 
-        # Install the specified version of bundler
-        gem install bundler -v 2.4.22 --user-install
+//         # Install the specified version of bundler
+//         gem install bundler -v 2.4.22 --user-install
 
         
-        bundle install
-        '''
-}
+//         bundle install
+//         '''
+// }
 
 
-        stage('Configure Xcode') {
-            sh '''
-            sudo xcode-select --switch /Applications/Xcode.app/Contents/Developer
-            xcodebuild -version
-            '''
-        }
+        // stage('Configure Xcode') {
+        //     sh '''
+        //     sudo xcode-select --switch /Applications/Xcode.app/Contents/Developer
+        //     xcodebuild -version
+        //     '''
+        // }
     }
 }
