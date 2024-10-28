@@ -35,9 +35,9 @@ void call(app_env) {
                 eval "$(rbenv init -)"
 
                 # Set up GEM_HOME, GEM_PATH, and PATH
-                export GEM_HOME=$(rbenv root)/versions/3.0.0
-                export GEM_PATH=$GEM_HOME
-                export PATH=$GEM_HOME/bin:$PATH
+                export GEM_HOME=\$(rbenv root)/versions/3.0.0
+                export GEM_PATH=\$GEM_HOME
+                export PATH=\$GEM_HOME/bin:\$PATH
 
                 # Install the specified version of Bundler and bundle install
                 gem install bundler -v 2.4.22 --user-install
