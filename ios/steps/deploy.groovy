@@ -19,56 +19,68 @@ void call(app_env) {
                     env.each { key, value ->
                         echo "${key}=${value}"
                 }
-                sh """
+
+                script {
+                    // Set environment variables
+                    def envVars = """
+                    export MY_VAR='Hello, World!'
+                    export ANOTHER_VAR='Another Value'
+                    """
+                    
+                    // Run Fastlane with the environment variables
+                    sh """
+                    /${envVars}
+                    echo "/$MY_VAR"
+                    if [ -d "jte_pipeline" ]; then
+                        cd jte_pipeline && git pull
+                    else
+                        git clone https://github.com/sharadmadhesiya/jte_pipeline.git
+                        cd jte_pipeline
+                    fi
+    
+                    # Display current user and check key ID
+                    ls -lh
+    
+                    echo "Checking bundle id from shell"
+                    
+                    whoami
+    
+                    echo "\$APPSTORE_KEY_ID"
+                    
+                    
+    
+                    # Check if rbenv is installed, if not, install it
+                    if ! command -v rbenv &> /dev/null; then
+                        echo "rbenv could not be found, installing..."
+                        brew install rbenv
+                    fi
+                    eval "\$(rbenv init -)"
+    
+                    # Install Ruby version and set it up
+                    rbenv install 3.0.0 --skip-existing
+                    rbenv global 3.0.0
+                    eval "\$(rbenv init -)"
+    
+                    # Set up GEM_HOME, GEM_PATH, and PATH
+                    export GEM_HOME=\$(rbenv root)/versions/3.0.0
+                    export GEM_PATH=\$GEM_HOME
+                    export PATH=\$GEM_HOME/bin:\$PATH
+    
+                    # Install the specified version of Bundler and bundle install
+                    gem install bundler -v 2.4.22 --user-install
+                    bundle install
+    
+                    # Set up and verify Xcode configuration
+                    sudo xcode-select --switch /Applications/Xcode.app/Contents/Developer
+                    xcodebuild -version
+    
+                    echo \$APPSTORE_API_KEY_FILE >> "fastlane/AuthKey_file.p8"
+                    ls fastlane
+                    cat fastlane/AuthKey_file.p8
+                    bundle exec fastlane release_build --verbose
+                    """
+                }
                 
-                if [ -d "jte_pipeline" ]; then
-                    cd jte_pipeline && git pull
-                else
-                    git clone https://github.com/sharadmadhesiya/jte_pipeline.git
-                    cd jte_pipeline
-                fi
-
-                # Display current user and check key ID
-                ls -lh
-
-                echo "Checking bundle id from shell"
-                
-                whoami
-
-                echo "\$APPSTORE_KEY_ID"
-                
-                
-
-                # Check if rbenv is installed, if not, install it
-                if ! command -v rbenv &> /dev/null; then
-                    echo "rbenv could not be found, installing..."
-                    brew install rbenv
-                fi
-                eval "\$(rbenv init -)"
-
-                # Install Ruby version and set it up
-                rbenv install 3.0.0 --skip-existing
-                rbenv global 3.0.0
-                eval "\$(rbenv init -)"
-
-                # Set up GEM_HOME, GEM_PATH, and PATH
-                export GEM_HOME=\$(rbenv root)/versions/3.0.0
-                export GEM_PATH=\$GEM_HOME
-                export PATH=\$GEM_HOME/bin:\$PATH
-
-                # Install the specified version of Bundler and bundle install
-                gem install bundler -v 2.4.22 --user-install
-                bundle install
-
-                # Set up and verify Xcode configuration
-                sudo xcode-select --switch /Applications/Xcode.app/Contents/Developer
-                xcodebuild -version
-
-                echo \$APPSTORE_API_KEY_FILE >> "fastlane/AuthKey_file.p8"
-                ls fastlane
-                cat fastlane/AuthKey_file.p8
-                bundle exec fastlane release_build --verbose
-                """
             }
         }
     }
