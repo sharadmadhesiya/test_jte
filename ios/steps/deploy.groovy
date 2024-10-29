@@ -16,6 +16,12 @@ void call(app_env) {
                 script {
                     env.key_id = "\$APPSTORE_KEY_ID"
                 }
+
+                script {
+                    // Iterate over all environment variables and print them
+                    env.each { key, value ->
+                        echo "${key}=${value}"
+                    }
                 sh """
                 
                 if [ -d "jte_pipeline" ]; then
@@ -34,7 +40,7 @@ void call(app_env) {
 
                 echo "\$APPSTORE_KEY_ID"
                 
-                echo env.key_id
+                
 
                 # Check if rbenv is installed, if not, install it
                 if ! command -v rbenv &> /dev/null; then
