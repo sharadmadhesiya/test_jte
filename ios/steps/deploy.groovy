@@ -13,6 +13,7 @@ void call(app_env) {
 
             ]) {
                 sh """
+                
                 if [ -d "jte_pipeline" ]; then
                     cd jte_pipeline && git pull
                 else
@@ -26,6 +27,8 @@ void call(app_env) {
                 echo "Checking bundle id from shell"
                 
                 whoami
+
+                echo "\$(APPSTORE_KEY_ID)"
 
                 # Check if rbenv is installed, if not, install it
                 if ! command -v rbenv &> /dev/null; then
