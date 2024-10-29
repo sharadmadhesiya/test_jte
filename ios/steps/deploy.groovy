@@ -14,7 +14,7 @@ void call(app_env) {
                 script {
                     // Set environment variables in the shell
                     sh """
-                    export APPSTORE_KEY_ID=\$APPSTORE_KEY_ID'
+                    export APPSTORE_KEY_ID=\$APPSTORE_KEY_ID
                     export ANOTHER_VAR='Another Value'
                     
                     echo \$APPSTORE_KEY_ID
