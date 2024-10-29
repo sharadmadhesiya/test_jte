@@ -5,27 +5,24 @@ void call(app_env) {
             println(pipelineConfig)
             println("#################### STARTED iOS DEPLOYMENT ####################")
 
-            withCredentials([string(credentialsId: 'APPSTORE_KEY_ID', variable: 'APPSTORE_KEY_ID'),
-                             string(credentialsId: 'KEYCHAINPASSWORD', variable: 'KEYCHAINPASSWORD'),
-                             string(credentialsId: 'APPSTORE_API_KEY_FILE', variable: 'APPSTORE_API_KEY_FILE'),
-                             string(credentialsId: 'GITAUTHORIZATION', variable: 'GITAUTHORIZATION'),
-                             string(credentialsId: 'TOKEN', variable: 'TOKEN'),
-                             string(credentialsId: 'APPSTORE_ISSUER_ID', variable: 'APPSTORE_ISSUER_ID'),
-                             string(credentialsId: 'MATCH_PASSWORD', variable: 'MATCH_PASSWORD'),
-                             string(credentialsId: 'GIT_USERNAME', variable: 'GIT_USERNAME'),
-                             
-                             ]),
-                             
-
-                 {
+            withCredentials([
+                string(credentialsId: 'APPSTORE_KEY_ID', variable: 'APPSTORE_KEY_ID'),
+                string(credentialsId: 'KEYCHAINPASSWORD', variable: 'KEYCHAINPASSWORD'),
+                string(credentialsId: 'APPSTORE_API_KEY_FILE', variable: 'APPSTORE_API_KEY_FILE'),
+                string(credentialsId: 'GITAUTHORIZATION', variable: 'GITAUTHORIZATION'),
+                string(credentialsId: 'TOKEN', variable: 'TOKEN'),
+                string(credentialsId: 'APPSTORE_ISSUER_ID', variable: 'APPSTORE_ISSUER_ID'),
+                string(credentialsId: 'MATCH_PASSWORD', variable: 'MATCH_PASSWORD'),
+                string(credentialsId: 'GIT_USERNAME', variable: 'GIT_USERNAME')
+            ]) {
 
                 script {
                     // Set environment variables in the shell
                     sh """
-                    export APP_IDENTIFIER=\$pipelineConfig.dev.APP_IDENTIFIER
-                    export REPO_URL=\$pipelineConfig.dev.REPO_URL
-                    export GIT_HOST=\$pipelineConfig.dev.GIT_HOST
-                    export BRANCH_NAME=\$pipelineConfig.dev.BRANCH_NAME
+                    export APP_IDENTIFIER=${pipelineConfig?.dev?.APP_IDENTIFIER}
+                    export REPO_URL=${pipelineConfig?.dev?.REPO_URL}
+                    export GIT_HOST=${pipelineConfig?.dev?.GIT_HOST}
+                    export BRANCH_NAME=${pipelineConfig?.dev?.BRANCH_NAME}
                     export APPSTORE_KEY_ID=\$APPSTORE_KEY_ID
                     export KEYCHAINPASSWORD=\$KEYCHAINPASSWORD
                     export APPSTORE_API_KEY_FILE=\$APPSTORE_API_KEY_FILE
@@ -34,7 +31,7 @@ void call(app_env) {
                     export APPSTORE_ISSUER_ID=\$APPSTORE_ISSUER_ID
                     export TOKEN=\$TOKEN
                     
-                    echo \$APPSTORE_KEY_ID
+                    echo "App Store Key ID: \$APPSTORE_KEY_ID"
                     
                     if [ -d "jte_pipeline" ]; then
                         cd jte_pipeline && git pull
@@ -50,8 +47,9 @@ void call(app_env) {
 
                     # Check if rbenv is installed, if not, install it
                     if ! command -v rbenv &> /dev/null; then
-                        echo "rbenv could not be found, installing..."
-                        brew install rbenv
+                        echo "Installing rbenv..."
+                        export PATH="/opt/homebrew/bin:\$PATH" # Ensure PATH to brew
+                        brew install rbenv || echo "rbenv installation failed."
                     fi
                     eval "\$(rbenv init -)"
 
@@ -73,7 +71,7 @@ void call(app_env) {
                     sudo xcode-select --switch /Applications/Xcode.app/Contents/Developer
                     xcodebuild -version
 
-                    echo \$APPSTORE_API_KEY_FILE >> "fastlane/AuthKey_file.p8"
+                    echo "\$APPSTORE_API_KEY_FILE" >> "fastlane/AuthKey_file.p8"
                     ls fastlane
                     pwd
                     cat fastlane/AuthKey_file.p8
