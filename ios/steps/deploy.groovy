@@ -14,10 +14,10 @@ void call(app_env) {
                 script {
                     // Set environment variables in the shell
                     sh """
-                    export MY_VAR='Hello, World!'
+                    export APPSTORE_KEY_ID=\$APPSTORE_KEY_ID'
                     export ANOTHER_VAR='Another Value'
                     
-                    echo "MY_VAR is: \$MY_VAR"
+                    echo "APPSTORE_KEY_ID is: \$APPSTORE_KEY_ID"
                     
                     if [ -d "jte_pipeline" ]; then
                         cd jte_pipeline && git pull
