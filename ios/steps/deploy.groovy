@@ -19,10 +19,10 @@ void call(app_env) {
                     export APPSTORE_KEY_ID=\$APPSTORE_KEY_ID
                     export KEYCHAINPASSWORD=\$KEYCHAINPASSWORD
                     export APPSTORE_API_KEY_FILE=\$APPSTORE_API_KEY_FILE
-                    export GITAUTHORIZATION = \$GITAUTHORIZATION
-                    export MATCH_PASSWORD = \$MATCH_PASSWORD
-                    export APPSTORE_ISSUER_ID= \$APPSTORE_ISSUER_ID
-                    export TOKEN = \$TOKEN
+                    export GITAUTHORIZATION=\$GITAUTHORIZATION
+                    export MATCH_PASSWORD=\$MATCH_PASSWORD
+                    export APPSTORE_ISSUER_ID=\$APPSTORE_ISSUER_ID
+                    export TOKEN=\$TOKEN
                     
                     echo \$APPSTORE_KEY_ID
                     
