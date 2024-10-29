@@ -9,13 +9,20 @@ void call(app_env) {
                              string(credentialsId: 'KEYCHAINPASSWORD', variable: 'KEYCHAINPASSWORD'),
                              string(credentialsId: 'APPSTORE_API_KEY_FILE', variable: 'APPSTORE_API_KEY_FILE'),
                              string(credentialsId: 'GITAUTHORIZATION', variable: 'GITAUTHORIZATION'),
+                             string(credentialsId: 'TOKEN', variable: 'TOKEN'),
+                             string(credentialsId: 'APPSTORE_ISSUER_ID', variable: 'APPSTORE_ISSUER_ID'),
                              string(credentialsId: 'MATCH_PASSWORD', variable: 'MATCH_PASSWORD')]) {
 
                 script {
                     // Set environment variables in the shell
                     sh """
                     export APPSTORE_KEY_ID=\$APPSTORE_KEY_ID
-                    export ANOTHER_VAR='Another Value'
+                    export KEYCHAINPASSWORD=\$KEYCHAINPASSWORD
+                    export APPSTORE_API_KEY_FILE=\$APPSTORE_API_KEY_FILE
+                    export GITAUTHORIZATION = \$GITAUTHORIZATION
+                    export MATCH_PASSWORD = \$MATCH_PASSWORD
+                    export APPSTORE_ISSUER_ID= \$APPSTORE_ISSUER_ID
+                    export TOKEN = \$TOKEN
                     
                     echo \$APPSTORE_KEY_ID
                     
