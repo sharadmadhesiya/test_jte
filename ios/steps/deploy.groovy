@@ -11,11 +11,21 @@ void call(app_env) {
                              string(credentialsId: 'GITAUTHORIZATION', variable: 'GITAUTHORIZATION'),
                              string(credentialsId: 'TOKEN', variable: 'TOKEN'),
                              string(credentialsId: 'APPSTORE_ISSUER_ID', variable: 'APPSTORE_ISSUER_ID'),
-                             string(credentialsId: 'MATCH_PASSWORD', variable: 'MATCH_PASSWORD')]) {
+                             string(credentialsId: 'MATCH_PASSWORD', variable: 'MATCH_PASSWORD'),
+                             string(credentialsId: 'GIT_USERNAME', variable: 'GIT_USERNAME'),
+                             
+                             ]),
+                             
+
+                 {
 
                 script {
                     // Set environment variables in the shell
                     sh """
+                    export APP_IDENTIFIER=\$pipelineConfig.dev.APP_IDENTIFIER
+                    export REPO_URL=\$pipelineConfig.dev.REPO_URL
+                    export GIT_HOST=\$pipelineConfig.dev.GIT_HOST
+                    export BRANCH_NAME=\$pipelineConfig.dev.BRANCH_NAME
                     export APPSTORE_KEY_ID=\$APPSTORE_KEY_ID
                     export KEYCHAINPASSWORD=\$KEYCHAINPASSWORD
                     export APPSTORE_API_KEY_FILE=\$APPSTORE_API_KEY_FILE
