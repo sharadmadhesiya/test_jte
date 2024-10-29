@@ -12,16 +12,12 @@ void call(app_env) {
                              string(credentialsId: 'MATCH_PASSWORD', variable: 'MATCH_PASSWORD')]) {
 
                 script {
-                    // Set environment variables
-                    def envVars = """
+                    // Set environment variables in the shell
+                    sh """
                     export MY_VAR='Hello, World!'
                     export ANOTHER_VAR='Another Value'
-                    """
                     
-                    // Run Fastlane with the environment variables
-                    sh """
-                    ${envVars}
-                    echo "MY_VAR: ${MY_VAR}"
+                    echo "MY_VAR is: \$MY_VAR"
                     
                     if [ -d "jte_pipeline" ]; then
                         cd jte_pipeline && git pull
