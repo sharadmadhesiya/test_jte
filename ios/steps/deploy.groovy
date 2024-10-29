@@ -17,7 +17,7 @@ void call(app_env) {
                     export APPSTORE_KEY_ID=\$APPSTORE_KEY_ID'
                     export ANOTHER_VAR='Another Value'
                     
-                    echo "\$APPSTORE_KEY_ID"
+                    echo \$APPSTORE_KEY_ID
                     
                     if [ -d "jte_pipeline" ]; then
                         cd jte_pipeline && git pull
