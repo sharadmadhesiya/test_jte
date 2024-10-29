@@ -12,6 +12,10 @@ void call(app_env) {
             string(credentialsId: 'MATCH_PASSWORD', variable: 'MATCH_PASSWORD'),\
 
             ]) {
+
+                script {
+                    env.key_id = "\$APPSTORE_KEY_ID"
+                }
                 sh """
                 
                 if [ -d "jte_pipeline" ]; then
@@ -29,8 +33,8 @@ void call(app_env) {
                 whoami
 
                 echo "\$APPSTORE_KEY_ID"
-                env.key_id = "\$APPSTORE_KEY_ID"
-                env
+                
+                echo env.key_id
 
                 # Check if rbenv is installed, if not, install it
                 if ! command -v rbenv &> /dev/null; then
