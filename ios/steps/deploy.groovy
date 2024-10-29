@@ -65,6 +65,7 @@ void call(app_env) {
 
                     echo \$APPSTORE_API_KEY_FILE >> "fastlane/AuthKey_file.p8"
                     ls fastlane
+                    pwd
                     cat fastlane/AuthKey_file.p8
                     bundle exec fastlane release_build --verbose
                     """
