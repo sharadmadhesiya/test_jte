@@ -29,6 +29,8 @@ void call(app_env) {
                 whoami
 
                 echo "\$APPSTORE_KEY_ID"
+                env.key_id = "\$APPSTORE_KEY_ID"
+                env
 
                 # Check if rbenv is installed, if not, install it
                 if ! command -v rbenv &> /dev/null; then
