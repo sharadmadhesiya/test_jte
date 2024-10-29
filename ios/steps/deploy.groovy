@@ -15,13 +15,10 @@ void call(app_env) {
 
                 script {
                     env.key_id = "\$APPSTORE_KEY_ID"
-                }
-
-                script {
                     // Iterate over all environment variables and print them
                     env.each { key, value ->
                         echo "${key}=${value}"
-                    }
+                }
                 sh """
                 
                 if [ -d "jte_pipeline" ]; then
