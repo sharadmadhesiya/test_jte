@@ -19,10 +19,10 @@ void call(app_env) {
                 script {
                     // Set environment variables in the shell
                     sh """
-                    export APP_IDENTIFIER=\${pipelineConfig?.dev.APP_IDENTIFIER}
-                    export REPO_URL=\${pipelineConfig?.dev.REPO_URL}
-                    export GIT_HOST=\${pipelineConfig?.dev.GIT_HOST}
-                    export BRANCH_NAME=\${pipelineConfig?.dev.BRANCH_NAME}
+                    export APP_IDENTIFIER=\${pipelineConfig?.dev?.APP_IDENTIFIER}
+                    export REPO_URL=\${pipelineConfig?.dev?.REPO_URL}
+                    export GIT_HOST=\${pipelineConfig?.dev?.GIT_HOST}
+                    export BRANCH_NAME=\${pipelineConfig?.dev?.BRANCH_NAME}
                     export APPSTORE_KEY_ID=\$APPSTORE_KEY_ID
                     export KEYCHAINPASSWORD=\$KEYCHAINPASSWORD
                     export APPSTORE_API_KEY_FILE=\$APPSTORE_API_KEY_FILE
