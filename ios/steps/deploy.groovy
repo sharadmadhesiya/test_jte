@@ -39,7 +39,14 @@ void call(app_env) {
 
                     if ! command -v git &> /dev/null; then
                         echo "Git not found, installing..."
-                        brew install git
+                        if command -v apt &> /dev/null; then
+                            sudo apt update && sudo apt install -y git
+                        elif command -v yum &> /dev/null; then
+                            sudo yum install -y git
+                        else
+                            echo "No compatible package manager found (brew, apt, yum)."
+                            exit 1
+                        fi
                     fi
                     
                     # Clone or update the repository
