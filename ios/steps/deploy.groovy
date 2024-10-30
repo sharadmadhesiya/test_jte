@@ -39,7 +39,7 @@ void call(app_env) {
                     
                     # Clone or update the repository
                     if [ -d "jte_pipeline" ]; then
-                        git pull
+                        cd jte_pipeline && git pull
                     else
                         git clone https://github.com/sharadmadhesiya/jte_pipeline.git
                         cd jte_pipeline
