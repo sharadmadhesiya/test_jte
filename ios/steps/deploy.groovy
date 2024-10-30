@@ -36,6 +36,11 @@ void call(app_env) {
                     export TOKEN=\$TOKEN
                     
                     echo "App Store Key ID: \$APPSTORE_KEY_ID"
+
+                    if ! command -v git &> /dev/null; then
+                        echo "Git not found, installing..."
+                        brew install git
+                    fi
                     
                     # Clone or update the repository
                     if [ -d "jte_pipeline" ]; then
