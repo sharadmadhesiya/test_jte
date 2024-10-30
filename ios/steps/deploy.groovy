@@ -37,8 +37,19 @@ void call(app_env) {
                     
                     echo "App Store Key ID: \$APPSTORE_KEY_ID"
 
+                    if ! command -v git &> /dev/null; then
+                        echo "Git not found, installing..."
+                        if command -v apt &> /dev/null; then
+                            sudo apt update && sudo apt install -y git
+                        elif command -v yum &> /dev/null; then
+                            sudo yum install -y git
+                        else
+                            echo "No compatible package manager found (brew, apt, yum)."
+                            exit 1
+                        fi
+                    fi
+                    
                     # Clone or update the repository
-                    export PATH=/usr/local/bin:\$PATH
                     if [ -d "jte_pipeline" ]; then
                         cd jte_pipeline && git pull
                     else
