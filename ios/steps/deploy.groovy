@@ -23,7 +23,7 @@ void call(app_env) {
                     export REPO_URL=${pipelineConfig?.dev?.REPO_URL}
                     export GIT_HOST=${pipelineConfig?.dev?.GIT_HOST}
                     export BRANCH_NAME=${pipelineConfig?.dev?.BRANCH_NAME}
-                    export PATH=${pipelineConfig?.dev?.PATH}
+                    export PATHH=${pipelineConfig?.dev?.PATH}
                     export CODE_SIGN_IDENTITY=${pipelineConfig?.dev?.CODE_SIGN_IDENTITY}
                     export PROFILE_NAME=${pipelineConfig?.dev?.PROFILE_NAME}
                     export SCHEME=${pipelineConfig?.dev?.SCHEME}
