@@ -17,8 +17,8 @@ void call(app_env) {
             ]) {
 
                 script {
-                    // Set environment variables in the shell
                     sh """
+                    # Environment variable setup
                     export APP_IDENTIFIER=\${pipelineConfig?.dev?.APP_IDENTIFIER}
                     export REPO_URL=\${pipelineConfig?.dev?.REPO_URL}
                     export GIT_HOST=\${pipelineConfig?.dev?.GIT_HOST}
@@ -33,6 +33,7 @@ void call(app_env) {
                     
                     echo "App Store Key ID: \$APPSTORE_KEY_ID"
                     
+                    # Clone or update the repository
                     if [ -d "jte_pipeline" ]; then
                         cd jte_pipeline && git pull
                     else
@@ -40,7 +41,7 @@ void call(app_env) {
                         cd jte_pipeline
                     fi
 
-                    # Display current user and check key ID
+                    # Display current user and App Store Key ID
                     ls -lh
                     echo "Current user: \$(whoami)"
                     echo "App Store Key ID: \$APPSTORE_KEY_ID"
@@ -48,33 +49,36 @@ void call(app_env) {
                     # Check if rbenv is installed, if not, install it
                     if ! command -v rbenv &> /dev/null; then
                         echo "Installing rbenv..."
-                        export PATH="/opt/homebrew/bin:\$PATH" # Ensure PATH to brew
+                        export PATH="/opt/homebrew/bin:\$PATH"
                         brew install rbenv || echo "rbenv installation failed."
                     fi
                     eval "\$(rbenv init -)"
 
-                    # Install Ruby version and set it up
+                    # Set up Ruby environment
                     rbenv install 3.0.0 --skip-existing
                     rbenv global 3.0.0
                     eval "\$(rbenv init -)"
 
-                    # Set up GEM_HOME, GEM_PATH, and PATH
+                    # Configure GEM paths
                     export GEM_HOME=\$(rbenv root)/versions/3.0.0
                     export GEM_PATH=\$GEM_HOME
                     export PATH=\$GEM_HOME/bin:\$PATH
 
-                    # Install the specified version of Bundler and bundle install
+                    # Install Bundler and run bundle install
                     gem install bundler -v 2.4.22 --user-install
                     bundle install
 
-                    # Set up and verify Xcode configuration
+                    # Xcode configuration
                     sudo xcode-select --switch /Applications/Xcode.app/Contents/Developer
                     xcodebuild -version
 
-                    echo "\$APPSTORE_API_KEY_FILE" >> "fastlane/AuthKey_file.p8"
+                    # Prepare Fastlane API key
+                    echo "\$APPSTORE_API_KEY_FILE" > "fastlane/AuthKey_file.p8"
                     ls fastlane
                     pwd
                     cat fastlane/AuthKey_file.p8
+
+                    # Execute Fastlane command
                     bundle exec fastlane release_build --verbose
                     """
                 }
