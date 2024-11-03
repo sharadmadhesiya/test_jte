@@ -34,6 +34,8 @@ void call(app_env) {
                     export MATCH_PASSWORD=\$MATCH_PASSWORD
                     export APPSTORE_ISSUER_ID=\$APPSTORE_ISSUER_ID
                     export TOKEN=\$TOKEN
+                    export TEAM_ID=${pipelineConfig?.dev?.TEAM_ID}
+                    export APPLE_ID=${pipelineConfig?.dev?.APPLE_ID}
                     
                     echo "App Store Key ID: \$APPSTORE_KEY_ID"
                     REPO_NAME="\${REPO_URL##*/}"
