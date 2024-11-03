@@ -23,7 +23,7 @@ void call(app_env) {
                     export REPO_URL=${pipelineConfig?.dev?.REPO_URL}
                     export GIT_HOST=${pipelineConfig?.dev?.GIT_HOST}
                     export BRANCH_NAME=${pipelineConfig?.dev?.BRANCH_NAME}
-                    export PATHH=${pipelineConfig?.dev?.PATH}
+                    export PROJECT_PATH=${pipelineConfig?.dev?.PROJECT_PATH}
                     export CODE_SIGN_IDENTITY=${pipelineConfig?.dev?.CODE_SIGN_IDENTITY}
                     export PROFILE_NAME=${pipelineConfig?.dev?.PROFILE_NAME}
                     export SCHEME=${pipelineConfig?.dev?.SCHEME}
@@ -41,7 +41,8 @@ void call(app_env) {
                     if [ -d "jte_pipeline" ]; then
                         cd jte_pipeline && git pull
                     else
-                        git clone https://github.com/sharadmadhesiya/jte_pipeline.git
+                        git clone https://\$GIT_USERNAME:\$TOKEN@\$GIT_HOST/\$REPO_URL
+                        //https://github.com/sharadmadhesiya/jte_pipeline.git
                         cd jte_pipeline
                     fi
 
