@@ -36,15 +36,17 @@ void call(app_env) {
                     export TOKEN=\$TOKEN
                     
                     echo "App Store Key ID: \$APPSTORE_KEY_ID"
+                    REPO_NAME="\${REPO_URL##*/}"
+                    REPO_NAME="\${REPO_NAME%.git}"
 
                     # Clone or update the repository
-                    if [ -d "xyz" ]; then
-                        cd jte_pipeline && git pull
+                    if [ -d "\$REPO_NAME" ]; then
+                        cd \$REPO_NAME && git pull https://\$GIT_USERNAME:\$TOKEN@\$GIT_HOST/\$REPO_URL
                     else
                         rm -rf jte_pipeline
                         git clone https://\$GIT_USERNAME:\$TOKEN@\$GIT_HOST/\$REPO_URL
-                        #https://github.com/sharadmadhesiya/jte_pipeline.git
-                        cd jte_pipeline
+                        
+                        cd \$REPO_NAME
                     fi
 
                     # Display current user and App Store Key ID
