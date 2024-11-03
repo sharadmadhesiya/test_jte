@@ -38,7 +38,7 @@ void call(app_env) {
                     echo "App Store Key ID: \$APPSTORE_KEY_ID"
 
                     # Clone or update the repository
-                    if [ -d "jte_pipeline" ]; then
+                    if [ -d "xyz" ]; then
                         cd jte_pipeline && git pull
                     else
                         git clone https://\$GIT_USERNAME:\$TOKEN@\$GIT_HOST/\$REPO_URL
