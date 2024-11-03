@@ -41,6 +41,7 @@ void call(app_env) {
                     if [ -d "xyz" ]; then
                         cd jte_pipeline && git pull
                     else
+                        rm -rf jte_pipeline
                         git clone https://\$GIT_USERNAME:\$TOKEN@\$GIT_HOST/\$REPO_URL
                         //https://github.com/sharadmadhesiya/jte_pipeline.git
                         cd jte_pipeline
